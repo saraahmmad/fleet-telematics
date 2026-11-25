@@ -1,0 +1,512 @@
+[
+    {
+        "id": "28d2337c884e4b55",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "broker1",
+        "type": "mqtt-broker",
+        "name": "HiveMQ public",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true
+    },
+    {
+        "id": "grp_live",
+        "type": "ui_group",
+        "name": "Live vehicle",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "grp_trip",
+        "type": "ui_group",
+        "name": "Events and trips",
+        "tab": "",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "bb613c828c8984aa",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-custom",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#030635",
+                "baseFont": "Palatino Linotype,Palatino,Book Antiqua,serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#24d2db",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#12b5aa",
+                "baseFont": "Georgia,Georgia,serif",
+                "reset": false
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#4B7930",
+                    "value": "#12b5aa",
+                    "edited": true
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#12b5aa",
+                    "edited": true
+                },
+                "page-backgroundColor": {
+                    "value": "#191631",
+                    "edited": true
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#12b5aa",
+                    "edited": true
+                },
+                "group-textColor": {
+                    "value": "#191631",
+                    "edited": true
+                },
+                "group-borderColor": {
+                    "value": "#129b92",
+                    "edited": true
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#e8e8e8",
+                    "edited": true
+                },
+                "widget-backgroundColor": {
+                    "value": "#12b5aa",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#191631",
+                    "edited": true
+                },
+                "base-font": {
+                    "value": "Georgia,Georgia,serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 105,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "919ce47490154a59",
+        "type": "ui_group",
+        "name": "Extra Cost",
+        "tab": "",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "tab_fleet",
+        "type": "ui_tab",
+        "name": "Fleet Overview",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "grp_fleet",
+        "type": "ui_group",
+        "name": "Fleet",
+        "tab": "tab_fleet",
+        "order": 1,
+        "disp": false,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "tab_drivers",
+        "type": "ui_tab",
+        "name": "Drivers and Trips",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "grp_drivers",
+        "type": "ui_group",
+        "name": "Drivers",
+        "tab": "tab_drivers",
+        "order": 1,
+        "disp": false,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "in1",
+        "type": "mqtt in",
+        "z": "28d2337c884e4b55",
+        "name": "telemetry",
+        "topic": "fleet_sara7392/+/telemetry",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "broker1",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 260,
+        "wires": [
+            [
+                "e0ef446f2b0c25a2",
+                "94c7f86090b260fd",
+                "64975c9f181d7775",
+                "fl_state"
+            ]
+        ]
+    },
+    {
+        "id": "dbg1",
+        "type": "debug",
+        "z": "28d2337c884e4b55",
+        "name": "show telemetry",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e0ef446f2b0c25a2",
+        "type": "function",
+        "z": "28d2337c884e4b55",
+        "name": "detect events",
+        "func": "const p = msg.payload;\nif (!p || typeof p !== 'object' || !p.vid) return null;\n\n// Starting thresholds: tune them later\nconst MIN_SAMPLES = 2;            // consecutive readings needed\nconst rules = [\n  { type: 'HARSH_BRAKING',      cond: p.ax <= -0.35,        value: p.ax },\n  { type: 'HARSH_ACCELERATION', cond: p.ax >= 0.30,         value: p.ax },\n  { type: 'SHARP_CORNERING',    cond: Math.abs(p.ay) >= 0.35, value: p.ay },\n  { type: 'OVERSPEED',          cond: p.speed > 50,         value: p.speed },\n  { type: 'ENGINE_OVERHEAT',    cond: p.temp !== undefined && p.temp >= 105, value: p.temp }\n];\n \nlet state = context.get('state') || {};\nstate[p.vid] = state[p.vid] || {};\nconst s = state[p.vid];\nconst out = [];\n\nfor (const r of rules) {\n  const k = s[r.type] = s[r.type] || { n: 0, active: false };\n  if (p.ign === 1 && r.cond) {\n    k.n++;\n    if (k.n >= MIN_SAMPLES && !k.active) {\n      k.active = true;\n      out.push({ payload: {\n        ts: p.ts, vid: p.vid, type: r.type, value: r.value,\n        speed: p.speed, lat: p.lat, lon: p.lon\n      }});\n    }\n  } else {\n    k.n = 0;\n    k.active = false;\n  }\n}\n\ncontext.set('state', state);\nreturn out.length ? [out] : null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 300,
+        "wires": [
+            [
+                "dbg1",
+                "94c7f86090b260fd",
+                "fl_state"
+            ]
+        ]
+    },
+    {
+        "id": "94c7f86090b260fd",
+        "type": "function",
+        "z": "28d2337c884e4b55",
+        "name": "trip & score",
+        "func": "const p = msg.payload;\nif (!p || typeof p !== 'object' || !p.vid) return null;\n\nlet trips = context.get('trips') || {};\nlet t = trips[p.vid];\n\n// 1) Event message (comes from \"detect events\")\nif (p.type) {\n  if (t) t.events[p.type] = (t.events[p.type] || 0) + 1;\n  context.set('trips', trips);\n  return null;\n}\n\n// 2) Telemetry message\nif (p.ign === 1 && !t) {\n  t = trips[p.vid] = {\n    id: p.vid + '-' + p.ts, vid: p.vid,\n    startTs: p.ts, lastTs: p.ts,\n    distKm: 0, idleSec: 0, overSec: 0,\n    speedSum: 0, n: 0, maxSpeed: 0, events: {}\n  };\n}\nif (!t) { context.set('trips', trips); return null; }\n\nlet dt = 1;                           // ESP32 publishes once per second of its own clock\nt.lastTs = p.ts;\n\nif (p.ign === 1) {\n  t.distKm += (p.speed / 3600) * dt;\n  if (p.speed < 1)  t.idleSec += dt;\n  if (p.speed > 50) t.overSec += dt;\n  t.speedSum += p.speed;\n  t.n++;\n  t.maxSpeed = Math.max(t.maxSpeed, p.speed);\n  context.set('trips', trips);\n  return null;\n}\n\n// Ignition OFF => trip ended: compute score\nconst e = t.events;\nconst b = e.HARSH_BRAKING || 0;\nconst a = e.HARSH_ACCELERATION || 0;\nconst c = e.SHARP_CORNERING || 0;\nconst o = e.ENGINE_OVERHEAT || 0;\nconst overMin = t.overSec / 60;\nconst idleMin = t.idleSec / 60;\n\n// Starting weights: tune them and justify them in the report\nconst raw = 8*b + 6*a + 5*c + 10*o + 3*overMin + 2*idleMin;\nconst score = Math.max(0, Math.round(100 - (raw / Math.max(t.distKm, 1)) * 2));\nconst label = score >= 85 ? 'GOOD' : (score >= 70 ? 'AVERAGE' : 'RISKY');\n\nconst summary = {\n  trip_id: t.id, vid: t.vid,\n  start: t.startTs, end: p.ts,\n  duration_s: p.ts - t.startTs,\n  distance_km: Number(t.distKm.toFixed(2)),\n  avg_speed: t.n ? Number((t.speedSum / t.n).toFixed(1)) : 0,\n  max_speed: t.maxSpeed,\n  idle_min: Number(idleMin.toFixed(1)),\n  overspeed_min: Number(overMin.toFixed(1)),\n  events: e,\n  score: score, rating: label\n};\n\ndelete trips[p.vid];\ncontext.set('trips', trips);\n\n// keep history for the dashboard later\nconst hist = global.get('tripHistory') || [];\nhist.push(summary);\nglobal.set('tripHistory', hist.slice(-200));\n\nreturn { payload: summary };",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 380,
+        "wires": [
+            [
+                "8a506d744e7bd6a9",
+                "f_cost",
+                "fl_state"
+            ]
+        ]
+    },
+    {
+        "id": "8a506d744e7bd6a9",
+        "type": "debug",
+        "z": "28d2337c884e4b55",
+        "name": "trip summary",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "08102ce67ada580b",
+        "type": "ui_worldmap",
+        "z": "28d2337c884e4b55",
+        "group": "",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "OSMG",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "true",
+        "coords": "none",
+        "showgrid": "false",
+        "showruler": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "DR,CO,RA,DN,HM",
+        "maplist": "OSMG,OSMC,EsriC,EsriS,EsriT,EsriDG,UKOS",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 620,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "64975c9f181d7775",
+        "type": "function",
+        "z": "28d2337c884e4b55",
+        "name": "to map",
+        "func": "const p = msg.payload;\nif (!p || typeof p !== 'object' || p.lat === undefined) return null;\nreturn { payload: {\n  name: p.vid,\n  lat: p.lat,\n  lon: p.lon,\n  icon: \"car\",\n  layer: \"Vehicles\",\n  speed: p.speed\n}};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 220,
+        "wires": [
+            [
+                "08102ce67ada580b"
+            ]
+        ]
+    },
+    {
+        "id": "f_cost",
+        "type": "function",
+        "z": "28d2337c884e4b55",
+        "name": "trip cost",
+        "func": "// Replaces the code of the existing 'trip cost' node.\n// For every finished trip: computes the extra cost, saves the trip in a log, and\n// sends per-vehicle averages (all trips) to 'fleet state'.\nconst p = msg.payload;\nif (!p || !p.trip_id) return null;\n\n// ===== ASSUMPTIONS: replace with sourced values and cite them in the report =====\nconst FUEL_PRICE = 20.5;          // EGP per liter (diesel, Oct 2026: see report references)\nconst IDLE_L_PER_MIN = 0.015;     // liters per minute of idling (example)\nconst COST = { HARSH_BRAKING: 3, HARSH_ACCELERATION: 2, SHARP_CORNERING: 1.5, ENGINE_OVERHEAT: 50 }; // EGP per event (example)\nconst OVERSPEED_EGP_PER_MIN = 1.0; // extra fuel while speeding (example)\nconst TRIPS_PER_MONTH = 60;       // trips per vehicle per month (example)\nconst MAX_LOG = 5000;             // trips kept in the log\n\nconst e = p.events || {};\nlet cost = 0, eventCount = 0;\nfor (const k in COST) cost += (e[k] || 0) * COST[k];\nfor (const k in e) eventCount += e[k];\ncost += (p.overspeed_min || 0) * OVERSPEED_EGP_PER_MIN;\ncost += (p.idle_min || 0) * IDLE_L_PER_MIN * FUEL_PRICE;\n\nconst endSec = (p.end > 1.7e9) ? p.end : Math.round(Date.now() / 1000);\nconst entry = {\n  vid: p.vid, end: endSec, duration: p.duration_s, distance: p.distance_km,\n  avgSpeed: p.avg_speed, maxSpeed: p.max_speed, score: p.score, rating: p.rating,\n  events: Object.keys(e).map(k => k.replace(/_/g, ' ') + ' x' + e[k]).join(', ') || 'none',\n  eventCount: eventCount,\n  cost: Math.round(cost * 10) / 10\n};\n\nlet log = global.get('tripLog') || [];\nlog.push(entry);\nif (log.length > MAX_LOG) log = log.slice(-MAX_LOG);\nglobal.set('tripLog', log);\n\n// averages per vehicle over the whole log\nconst by = {};\nlog.forEach(t => {\n  const v = by[t.vid] = by[t.vid] || { vid: t.vid, cost: 0, trips: 0 };\n  v.cost += t.cost; v.trips++;\n});\nconst rows = Object.values(by).map(v => {\n  const perTrip = v.cost / v.trips;\n  return { vid: v.vid, perTrip: Math.round(perTrip * 10) / 10,\n           monthly: Math.round(perTrip * TRIPS_PER_MONTH), trips: v.trips };\n});\nrows.sort((a, b) => b.perTrip - a.perTrip);\nreturn { payload: rows };",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 500,
+        "wires": [
+            [
+                "fl_state",
+                "dr_fn"
+            ]
+        ]
+    },
+    {
+        "id": "fl_tick",
+        "type": "inject",
+        "z": "28d2337c884e4b55",
+        "name": "refresh every 2s",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 490,
+        "y": 580,
+        "wires": [
+            [
+                "fl_state"
+            ]
+        ]
+    },
+    {
+        "id": "fl_state",
+        "type": "function",
+        "z": "28d2337c884e4b55",
+        "name": "fleet state",
+        "func": "// Keeps the latest state + short history of every vehicle and sends it to the dashboard\nconst OFFLINE_AFTER_MS = 6000;\nconst HIST = 120;                    // samples kept per vehicle (about 2 minutes)\nlet fleet = context.get('fleet') || {};\nconst p = msg.payload;\n\nfunction get(vid) {\n  return fleet[vid] = fleet[vid] || {\n    vid: vid, speed: 0, fuel: 0, temp: 0, ign: 0, lastSeen: 0,\n    lastEvent: '-', lastEventTs: 0, events: 0, recent: [],\n    scoreSum: 0, trips: 0, lastScore: null, lastTrip: null,\n    perTrip: null, monthly: null,\n    hSpeed: [], hTemp: [], hFuel: []\n  };\n}\nfunction push(arr, x) { arr.push(x); if (arr.length > HIST) arr.shift(); }\nconst pretty = (s) => String(s).replace(/_/g, ' ');\n\nif (Array.isArray(p)) {                      // cost rows from 'trip cost'\n  p.forEach(r => { const v = get(r.vid); v.perTrip = r.perTrip; v.monthly = r.monthly; });\n} else if (p && typeof p === 'object' && p.vid) {\n  const v = get(p.vid);\n  if (p.type) {                              // event from 'detect events'\n    v.lastEvent = p.type; v.lastEventTs = Date.now(); v.events++;\n    v.recent.unshift({ type: p.type, value: p.value, ts: Date.now() });\n    if (v.recent.length > 6) v.recent.pop();\n  } else if (p.trip_id) {                    // trip summary from 'trip & score'\n    v.lastScore = p.score; v.scoreSum += p.score; v.trips++;\n    const ev = Object.keys(p.events || {}).map(k => pretty(k) + ' x' + p.events[k]).join(', ');\n    v.lastTrip = {\n      distance: p.distance_km, duration: p.duration_s, avgSpeed: p.avg_speed,\n      maxSpeed: p.max_speed, score: p.score, rating: p.rating, events: ev || 'none'\n    };\n  } else if (p.speed !== undefined) {        // telemetry\n    v.speed = p.speed; v.fuel = p.fuel; v.temp = p.temp; v.ign = p.ign;\n    v.lastSeen = Date.now();\n    push(v.hSpeed, p.speed); push(v.hTemp, p.temp); push(v.hFuel, p.fuel);\n  }\n}\ncontext.set('fleet', fleet);\n\n// ---- build the message for the dashboard ----\nconst now = Date.now();\nconst clamp = (x) => Math.max(0, Math.min(100, x));\n// chart plot area inside an SVG of 320 x 120: x from 40 to 310, y from 10 (top) to 100 (bottom)\nconst X0 = 40, PW = 270, Y0 = 10, PH = 90;\nfunction yOf(val, lo, hi) {\n  return Y0 + PH - ((Math.max(lo, Math.min(hi, val)) - lo) / (hi - lo)) * PH;\n}\nfunction pts(arr, lo, hi) {                  // SVG polyline points, newest sample on the right\n  return arr.map((y, i) => {\n    const x = X0 + ((i + (HIST - arr.length)) / (HIST - 1)) * PW;\n    return x.toFixed(1) + ',' + yOf(y, lo, hi).toFixed(1);\n  }).join(' ');\n}\n\nconst rows = Object.values(fleet).map(v => ({\n  vid: v.vid,\n  online: (now - v.lastSeen) < OFFLINE_AFTER_MS,\n  ign: v.ign,\n  speed: Math.round(v.speed),\n  speedPct: clamp(v.speed / 120 * 100),\n  fuel: Math.round(v.fuel),\n  fuelPct: clamp(v.fuel),\n  temp: Math.round(v.temp),\n  lastEvent: v.lastEvent,\n  eventAgoS: v.lastEventTs ? Math.round((now - v.lastEventTs) / 1000) : null,\n  events: v.events,\n  recent: v.recent.map(e => ({\n    type: pretty(e.type),\n    value: (typeof e.value === 'number') ? Math.round(e.value * 100) / 100 : e.value,\n    agoS: Math.round((now - e.ts) / 1000)\n  })),\n  lastTrip: v.lastTrip,\n  lastScore: v.lastScore,\n  avgScore: v.trips ? Math.round(v.scoreSum / v.trips) : null,\n  trips: v.trips,\n  perTrip: v.perTrip,\n  monthly: v.monthly,\n  speedPts: pts(v.hSpeed, 0, 120),\n  tempPts: pts(v.hTemp, 40, 130),\n  fuelPts: pts(v.hFuel, 0, 100),\n  tempLimitY: yOf(105, 40, 130).toFixed(1)\n}));\nrows.sort((a, b) => a.vid.localeCompare(b.vid));\n\nconst scored = rows.filter(r => r.avgScore !== null);\nconst summary = {\n  total: rows.length,\n  online: rows.filter(r => r.online).length,\n  fleetAvg: scored.length ? Math.round(scored.reduce((s, r) => s + r.avgScore, 0) / scored.length) : null,\n  atRisk: scored.filter(r => r.avgScore < 70).length\n};\nreturn { payload: { vehicles: rows, summary: summary } };",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 580,
+        "wires": [
+            [
+                "fl_ui"
+            ]
+        ]
+    },
+    {
+        "id": "fl_ui",
+        "type": "ui_template",
+        "z": "28d2337c884e4b55",
+        "group": "grp_fleet",
+        "name": "Fleet overview",
+        "order": 1,
+        "width": "12",
+        "height": "0",
+        "format": "<style>\n  .fl-wrap {\n    font-family: Segoe UI, Roboto, Arial, sans-serif;\n    color: #e2e8f0\n  }\n\n  .fl-sum {\n    display: flex;\n    gap: 12px;\n    flex-wrap: wrap;\n    margin-bottom: 14px\n  }\n\n  .fl-sum>div {\n    flex: 1;\n    min-width: 130px;\n    background: #1e293b;\n    color: #fff;\n    border-radius: 12px;\n    padding: 12px 16px;\n    border-left: 4px solid #0e9f9a\n  }\n\n  .fl-sum b {\n    display: block;\n    font-size: 28px;\n    line-height: 1.15;\n    color: #5eead4\n  }\n\n  .fl-sum span {\n    font-size: 11px;\n    color: #94a3b8;\n    text-transform: uppercase;\n    letter-spacing: .6px\n  }\n\n  .fl-hint {\n    font-size: 12px;\n    color: #94a3b8;\n    margin: 0 0 8px\n  }\n\n  .fl-grid {\n    display: flex;\n    gap: 14px;\n    flex-wrap: wrap\n  }\n\n  .fl-card {\n    flex: 1;\n    min-width: 270px;\n    max-width: 440px;\n    background: #1e293b;\n    border: 2px solid #334155;\n    border-radius: 14px;\n    padding: 14px 16px;\n    box-shadow: 0 2px 12px rgba(0, 0, 0, .35);\n    cursor: pointer\n  }\n\n  .fl-sel {\n    border-color: #2dd4bf\n  }\n\n  .fl-alert {\n    border-color: #ef4444;\n    box-shadow: 0 2px 14px rgba(239, 68, 68, .25)\n  }\n\n  .fl-head {\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    margin-bottom: 10px\n  }\n\n  .fl-id {\n    font-size: 20px;\n    font-weight: 700;\n    margin-right: auto\n  }\n\n  .fl-pill {\n    font-size: 11px;\n    font-weight: 600;\n    padding: 3px 9px;\n    border-radius: 999px\n  }\n\n  .fl-on {\n    background: #064e3b;\n    color: #6ee7b7\n  }\n\n  .fl-off {\n    background: #7f1d1d;\n    color: #fca5a5\n  }\n\n  .fl-drive {\n    background: #134e4a;\n    color: #5eead4\n  }\n\n  .fl-park {\n    background: #334155;\n    color: #cbd5e1\n  }\n\n  .fl-speed {\n    margin-bottom: 10px;\n    font-size: 13px;\n    color: #94a3b8\n  }\n\n  .fl-big {\n    font-size: 42px;\n    font-weight: 700;\n    color: #f8fafc;\n    line-height: 1\n  }\n\n  .fl-track {\n    height: 8px;\n    background: #334155;\n    border-radius: 999px;\n    overflow: hidden;\n    margin: 6px 0\n  }\n\n  .fl-fill {\n    height: 100%;\n    background: #14b8b2;\n    border-radius: 999px;\n    transition: width .5s\n  }\n\n  .fl-green {\n    background: #22c55e\n  }\n\n  .fl-red {\n    background: #ef4444\n  }\n\n  .fl-row {\n    display: flex;\n    gap: 14px;\n    margin-bottom: 10px\n  }\n\n  .fl-kpi {\n    flex: 1\n  }\n\n  .fl-kpi label {\n    display: block;\n    font-size: 11px;\n    color: #94a3b8;\n    text-transform: uppercase;\n    letter-spacing: .4px\n  }\n\n  .fl-kpi b {\n    font-size: 18px\n  }\n\n  .fl-kpi small {\n    display: block;\n    font-size: 11px;\n    color: #94a3b8\n  }\n\n  .fl-txt-red {\n    color: #f87171\n  }\n\n  .fl-txt-amber {\n    color: #fbbf24\n  }\n\n  .fl-badge {\n    display: inline-block;\n    min-width: 38px;\n    text-align: center;\n    padding: 2px 10px;\n    border-radius: 8px;\n    color: #fff;\n    background: #9ca3af\n  }\n\n  .fl-good {\n    background: #16a34a\n  }\n\n  .fl-avg {\n    background: #d97706\n  }\n\n  .fl-risky {\n    background: #dc2626\n  }\n\n  .fl-event {\n    font-size: 12px;\n    color: #94a3b8;\n    border-top: 1px solid #334155;\n    padding-top: 8px\n  }\n\n  .fl-detail {\n    margin-top: 16px;\n    background: #1e293b;\n    border: 1px solid #334155;\n    border-radius: 14px;\n    padding: 14px 16px\n  }\n\n  .fl-dtitle {\n    font-size: 18px;\n    font-weight: 700;\n    margin-bottom: 10px\n  }\n\n  .fl-charts {\n    display: flex;\n    gap: 14px;\n    flex-wrap: wrap;\n    margin-bottom: 12px\n  }\n\n  .fl-chart {\n    flex: 1;\n    min-width: 220px\n  }\n\n  .fl-chart label {\n    display: block;\n    font-size: 11px;\n    color: #94a3b8;\n    text-transform: uppercase;\n    letter-spacing: .4px;\n    margin-bottom: 4px\n  }\n\n  .fl-chart svg {\n    width: 100%;\n    height: auto;\n    background: #0f172a;\n    border-radius: 8px\n  }\n\n  .fl-cols {\n    display: flex;\n    gap: 20px;\n    flex-wrap: wrap;\n    font-size: 13px\n  }\n\n  .fl-cols>div {\n    flex: 1;\n    min-width: 240px\n  }\n\n  .fl-li {\n    padding: 3px 0;\n    border-bottom: 1px solid #334155\n  }\n\n  .fl-map-title {\n    font-size: 18px;\n    font-weight: 700;\n    margin: 18px 0 8px\n  }\n</style>\n<div class=\"fl-wrap\" ng-if=\"msg.payload\" ng-init=\"ui = {sel: null}\">\n  <div class=\"fl-sum\">\n    <div><b>{{msg.payload.summary.online}} / {{msg.payload.summary.total}}</b><span>Vehicles online</span></div>\n    <div>\n      <b>{{msg.payload.summary.fleetAvg === null ? '-' : msg.payload.summary.fleetAvg}}</b><span>Fleet average score</span>\n    </div>\n    <div><b>{{msg.payload.summary.atRisk}}</b><span>Vehicles at risk</span></div>\n  </div>\n\n  <p class=\"fl-hint\">Click a vehicle to see its details below.</p>\n  <div class=\"fl-grid\">\n    <div class=\"fl-card\" ng-repeat=\"v in msg.payload.vehicles track by v.vid\" ng-click=\"ui.sel = v.vid\"\n      ng-class=\"{'fl-sel': (ui.sel || msg.payload.vehicles[0].vid) === v.vid, 'fl-alert': v.temp >= 105 || (v.eventAgoS !== null && v.eventAgoS < 15)}\">\n      <div class=\"fl-head\">\n        <span class=\"fl-id\">{{v.vid}}</span>\n        <span class=\"fl-pill\" ng-class=\"v.online ? 'fl-on' : 'fl-off'\">{{v.online ? 'Online' : 'Offline'}}</span>\n        <span class=\"fl-pill\" ng-class=\"v.ign ? 'fl-drive' : 'fl-park'\">{{v.ign ? 'Driving' : 'Parked'}}</span>\n      </div>\n      <div class=\"fl-speed\">\n        <span class=\"fl-big\">{{v.speed}}</span> km/h\n        <div class=\"fl-track\">\n          <div class=\"fl-fill\" ng-style=\"{width: v.speedPct + '%'}\"></div>\n        </div>\n      </div>\n      <div class=\"fl-row\">\n        <div class=\"fl-kpi\">\n          <label>Fuel</label>\n          <div class=\"fl-track\">\n            <div class=\"fl-fill\" ng-class=\"v.fuel < 20 ? 'fl-red' : 'fl-green'\" ng-style=\"{width: v.fuelPct + '%'}\">\n            </div>\n          </div>\n          <b>{{v.fuel}}%</b>\n        </div>\n        <div class=\"fl-kpi\">\n          <label>Engine temp</label>\n          <b ng-class=\"v.temp >= 105 ? 'fl-txt-red' : (v.temp >= 95 ? 'fl-txt-amber' : '')\">{{v.temp}} &deg;C</b>\n        </div>\n      </div>\n      <div class=\"fl-row\">\n        <div class=\"fl-kpi\">\n          <label>Driver score (avg)</label>\n          <b><span class=\"fl-badge\" ng-class=\"{'fl-good': v.avgScore >= 85, 'fl-avg': v.avgScore >= 70 && v.avgScore < 85, 'fl-risky': v.avgScore !== null && v.avgScore < 70}\">{{v.avgScore === null ? '-' : v.avgScore}}</span></b>\n        </div>\n        <div class=\"fl-kpi\"><label>Trips</label><b>{{v.trips}}</b></div>\n        <div class=\"fl-kpi\">\n          <label>Extra cost / trip</label>\n          <b>{{v.perTrip === null ? '-' : v.perTrip + ' EGP'}}</b>\n          <small ng-if=\"v.monthly !== null\">about {{v.monthly}} EGP / month</small>\n        </div>\n      </div>\n      <div class=\"fl-event\">Last event:\n        <b>{{v.lastEvent.replace('_', ' ')}}</b><span ng-if=\"v.eventAgoS !== null\"> ({{v.eventAgoS}} s ago)</span>\n        &middot; total events: {{v.events}}</div>\n    </div>\n  </div>\n\n  <div class=\"fl-detail\" ng-repeat=\"v in msg.payload.vehicles track by v.vid\"\n    ng-show=\"(ui.sel || msg.payload.vehicles[0].vid) === v.vid\">\n    <div class=\"fl-dtitle\">{{v.vid}} details</div>\n    <div class=\"fl-charts\">\n      <div class=\"fl-chart\">\n        <label>Speed (km/h), last 120 readings</label>\n        <svg viewBox=\"0 0 320 120\">\n          <g stroke=\"#334155\" stroke-width=\"1\">\n            <line x1=\"40\" x2=\"310\" y1=\"10\" y2=\"10\"></line>\n            <line x1=\"40\" x2=\"310\" y1=\"55\" y2=\"55\"></line>\n            <line x1=\"40\" x2=\"310\" y1=\"100\" y2=\"100\"></line>\n          </g>\n          <g font-size=\"9\" fill=\"#94a3b8\" text-anchor=\"end\"><text x=\"36\" y=\"13\">120</text><text x=\"36\"\n              y=\"58\">60</text><text x=\"36\" y=\"103\">0</text></g>\n          <text x=\"40\" y=\"115\" font-size=\"9\" fill=\"#94a3b8\">older</text><text x=\"310\" y=\"115\" font-size=\"9\"\n            fill=\"#94a3b8\" text-anchor=\"end\">now</text>\n          <polyline fill=\"none\" stroke=\"#2dd4bf\" stroke-width=\"2\" ng-attr-points=\"{{v.speedPts}}\"></polyline>\n        </svg>\n      </div>\n      <div class=\"fl-chart\">\n        <label>Engine temp (&deg;C), red line = 105</label>\n        <svg viewBox=\"0 0 320 120\">\n          <g stroke=\"#334155\" stroke-width=\"1\">\n            <line x1=\"40\" x2=\"310\" y1=\"10\" y2=\"10\"></line>\n            <line x1=\"40\" x2=\"310\" y1=\"55\" y2=\"55\"></line>\n            <line x1=\"40\" x2=\"310\" y1=\"100\" y2=\"100\"></line>\n          </g>\n          <g font-size=\"9\" fill=\"#94a3b8\" text-anchor=\"end\"><text x=\"36\" y=\"13\">130</text><text x=\"36\"\n              y=\"58\">85</text><text x=\"36\" y=\"103\">40</text></g>\n          <text x=\"40\" y=\"115\" font-size=\"9\" fill=\"#94a3b8\">older</text><text x=\"310\" y=\"115\" font-size=\"9\"\n            fill=\"#94a3b8\" text-anchor=\"end\">now</text>\n          <line x1=\"40\" x2=\"310\" stroke=\"#ef4444\" stroke-width=\"1\" stroke-dasharray=\"4\" ng-attr-y1=\"{{v.tempLimitY}}\"\n            ng-attr-y2=\"{{v.tempLimitY}}\"></line>\n          <polyline fill=\"none\" stroke=\"#f59e0b\" stroke-width=\"2\" ng-attr-points=\"{{v.tempPts}}\"></polyline>\n        </svg>\n      </div>\n      <div class=\"fl-chart\">\n        <label>Fuel (%), last 120 readings</label>\n        <svg viewBox=\"0 0 320 120\">\n          <g stroke=\"#334155\" stroke-width=\"1\">\n            <line x1=\"40\" x2=\"310\" y1=\"10\" y2=\"10\"></line>\n            <line x1=\"40\" x2=\"310\" y1=\"55\" y2=\"55\"></line>\n            <line x1=\"40\" x2=\"310\" y1=\"100\" y2=\"100\"></line>\n          </g>\n          <g font-size=\"9\" fill=\"#94a3b8\" text-anchor=\"end\"><text x=\"36\" y=\"13\">100</text><text x=\"36\"\n              y=\"58\">50</text><text x=\"36\" y=\"103\">0</text></g>\n          <text x=\"40\" y=\"115\" font-size=\"9\" fill=\"#94a3b8\">older</text><text x=\"310\" y=\"115\" font-size=\"9\"\n            fill=\"#94a3b8\" text-anchor=\"end\">now</text>\n          <polyline fill=\"none\" stroke=\"#22c55e\" stroke-width=\"2\" ng-attr-points=\"{{v.fuelPts}}\"></polyline>\n        </svg>\n      </div>\n    </div>\n    <div class=\"fl-cols\">\n      <div>\n        <b>Recent events</b>\n        <div class=\"fl-li\" ng-repeat=\"e in v.recent track by $index\">{{e.type}} ({{e.value}}) &middot; {{e.agoS}} s ago\n        </div>\n        <div class=\"fl-li\" ng-if=\"v.recent.length === 0\">No events yet</div>\n      </div>\n      <div>\n        <b>Last trip</b>\n        <div ng-if=\"v.lastTrip\">\n          <div class=\"fl-li\">Distance: {{v.lastTrip.distance}} km &middot; Duration: {{v.lastTrip.duration}} s</div>\n          <div class=\"fl-li\">Average speed: {{v.lastTrip.avgSpeed}} km/h &middot; Max: {{v.lastTrip.maxSpeed}} km/h\n          </div>\n          <div class=\"fl-li\">Score: {{v.lastTrip.score}} ({{v.lastTrip.rating}})</div>\n          <div class=\"fl-li\">Events: {{v.lastTrip.events}}</div>\n        </div>\n        <div class=\"fl-li\" ng-if=\"!v.lastTrip\">No completed trip yet</div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"fl-map-title\">Live map</div>\n  <iframe src=\"/worldmap\" style=\"width:100%;height:380px;border:0;border-radius:12px\"></iframe>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 900,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dr_tick",
+        "type": "inject",
+        "z": "28d2337c884e4b55",
+        "name": "load saved trips at start",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 590,
+        "y": 440,
+        "wires": [
+            [
+                "dr_fn"
+            ]
+        ]
+    },
+    {
+        "id": "dr_fn",
+        "type": "function",
+        "z": "28d2337c884e4b55",
+        "name": "drivers report",
+        "func": "// Builds the ranking and the trip log for the 'Drivers and Trips' page\nconst TRIPS_PER_MONTH = 60;                  // same assumption as in 'trip cost'\nconst log = global.get('tripLog') || [];\n\nconst d = new Date();\nconst periods = {\n  today: new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(),\n  week:  Date.now() - 7 * 86400000,\n  month: new Date(d.getFullYear(), d.getMonth(), 1).getTime(),\n  all:   0\n};\n\nconst ranking = {};\nfor (const key of Object.keys(periods)) {\n  const by = {};\n  log.forEach(t => {\n    if (t.end * 1000 < periods[key]) return;\n    const v = by[t.vid] = by[t.vid] || { vid: t.vid, trips: 0, scoreSum: 0, km: 0, events: 0, cost: 0 };\n    v.trips++; v.scoreSum += t.score; v.km += t.distance; v.events += t.eventCount; v.cost += t.cost;\n  });\n  ranking[key] = Object.values(by).map(v => {\n    const perTrip = v.cost / v.trips;\n    return {\n      vid: v.vid, trips: v.trips,\n      avgScore: Math.round(v.scoreSum / v.trips),\n      km: Math.round(v.km * 10) / 10,\n      events: v.events,\n      cost: Math.round(v.cost * 10) / 10,\n      perTrip: Math.round(perTrip * 10) / 10,\n      monthly: Math.round(perTrip * TRIPS_PER_MONTH)\n    };\n  }).sort((a, b) => b.avgScore - a.avgScore);\n}\n\nreturn { payload: { periods: periods, ranking: ranking, log: log.slice(-300).reverse(), total: log.length } };\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 500,
+        "wires": [
+            [
+                "dr_ui"
+            ]
+        ]
+    },
+    {
+        "id": "dr_ui",
+        "type": "ui_template",
+        "z": "28d2337c884e4b55",
+        "group": "grp_drivers",
+        "name": "Drivers and trips",
+        "order": 1,
+        "width": "12",
+        "height": "0",
+        "format": "<style>\n  .dr-wrap {\n    font-family: Segoe UI, Roboto, Arial, sans-serif;\n    color: #e2e8f0\n  }\n\n  .dr-bar {\n    display: flex;\n    gap: 8px;\n    align-items: center;\n    flex-wrap: wrap;\n    margin-bottom: 14px\n  }\n\n  .dr-tab {\n    padding: 6px 14px;\n    border-radius: 999px;\n    border: 1px solid #334155;\n    background: #1e293b;\n    color: #e2e8f0;\n    cursor: pointer;\n    font-size: 13px\n  }\n\n  .dr-on {\n    background: #0e9f9a;\n    color: #fff;\n    border-color: #0e9f9a\n  }\n\n  .dr-sp {\n    margin-left: auto\n  }\n\n  .dr-btn {\n    padding: 6px 14px;\n    border-radius: 8px;\n    border: 1px solid #0e9f9a;\n    background: #0e9f9a;\n    color: #fff;\n    cursor: pointer;\n    font-size: 13px\n  }\n\n  .dr-h {\n    font-size: 18px;\n    font-weight: 700;\n    margin: 14px 0 8px\n  }\n\n  .dr-table {\n    width: 100%;\n    border-collapse: collapse;\n    font-size: 13px\n  }\n\n  .dr-table th {\n    text-align: left;\n    font-size: 11px;\n    text-transform: uppercase;\n    letter-spacing: .4px;\n    color: #94a3b8;\n    padding: 6px 8px;\n    border-bottom: 2px solid #334155\n  }\n\n  .dr-table td {\n    padding: 7px 8px;\n    border-bottom: 1px solid #334155\n  }\n\n  .dr-badge {\n    display: inline-block;\n    min-width: 34px;\n    text-align: center;\n    padding: 2px 8px;\n    border-radius: 8px;\n    color: #fff;\n    background: #9ca3af\n  }\n\n  .dr-good {\n    background: #16a34a\n  }\n\n  .dr-avg {\n    background: #d97706\n  }\n\n  .dr-risky {\n    background: #dc2626\n  }\n\n  .dr-note {\n    font-size: 12px;\n    color: #94a3b8;\n    margin-top: 6px\n  }\n\n  .dr-scroll {\n    max-height: 420px;\n    overflow: auto\n  }\n</style>\n<div class=\"dr-wrap\" ng-init=\"ui = {p: 'month'}\">\n  <div class=\"dr-bar\">\n    <span class=\"dr-tab\" ng-class=\"{'dr-on': ui.p === 'today'}\" ng-click=\"ui.p = 'today'\">Today</span>\n    <span class=\"dr-tab\" ng-class=\"{'dr-on': ui.p === 'week'}\" ng-click=\"ui.p = 'week'\">Last 7 days</span>\n    <span class=\"dr-tab\" ng-class=\"{'dr-on': ui.p === 'month'}\" ng-click=\"ui.p = 'month'\">This month</span>\n    <span class=\"dr-tab\" ng-class=\"{'dr-on': ui.p === 'all'}\" ng-click=\"ui.p = 'all'\">All</span>\n    <button class=\"dr-btn dr-sp\" ng-click=\"exportCsv()\">Download trips (CSV)</button>\n  </div>\n\n  <div ng-if=\"!msg.payload\">No trips yet. Finished trips appear here.</div>\n\n  <div ng-if=\"msg.payload\">\n    <div class=\"dr-h\">Driver ranking</div>\n    <table class=\"dr-table\">\n      <tr>\n        <th>#</th>\n        <th>Vehicle</th>\n        <th>Avg score</th>\n        <th>Trips</th>\n        <th>Distance (km)</th>\n        <th>Events</th>\n        <th>Extra cost (EGP)</th>\n        <th>Per trip</th>\n        <th>Monthly est.</th>\n      </tr>\n      <tr ng-repeat=\"r in msg.payload.ranking[ui.p]\">\n        <td>{{$index + 1}}</td>\n        <td><b>{{r.vid}}</b></td>\n        <td>\n          <span class=\"dr-badge\" ng-class=\"{'dr-good': r.avgScore >= 85, 'dr-avg': r.avgScore >= 70 && r.avgScore < 85, 'dr-risky': r.avgScore < 70}\">{{r.avgScore}}</span>\n        </td>\n        <td>{{r.trips}}</td>\n        <td>{{r.km}}</td>\n        <td>{{r.events}}</td>\n        <td>{{r.cost}}</td>\n        <td>{{r.perTrip}}</td>\n        <td>{{r.monthly}}</td>\n      </tr>\n      <tr ng-if=\"msg.payload.ranking[ui.p].length === 0\">\n        <td colspan=\"9\">No trips in this period.</td>\n      </tr>\n    </table>\n    <div class=\"dr-note\">Monthly estimate = average extra cost per trip x an assumed 60 trips per month. Costs use\n      example assumptions, so read them as a comparison between drivers.</div>\n\n    <div class=\"dr-h\">Trip log</div>\n    <div class=\"dr-scroll\">\n      <table class=\"dr-table\">\n        <tr>\n          <th>Time</th>\n          <th>Vehicle</th>\n          <th>Distance (km)</th>\n          <th>Duration (s)</th>\n          <th>Avg / max speed</th>\n          <th>Score</th>\n          <th>Events</th>\n          <th>Extra cost (EGP)</th>\n        </tr>\n        <tr ng-repeat=\"t in msg.payload.log\" ng-if=\"t.end * 1000 >= msg.payload.periods[ui.p]\">\n          <td>{{t.end * 1000 | date:'dd MMM HH:mm'}}</td>\n          <td><b>{{t.vid}}</b></td>\n          <td>{{t.distance}}</td>\n          <td>{{t.duration}}</td>\n          <td>{{t.avgSpeed}} / {{t.maxSpeed}}</td>\n          <td>\n            <span class=\"dr-badge\" ng-class=\"{'dr-good': t.score >= 85, 'dr-avg': t.score >= 70 && t.score < 85, 'dr-risky': t.score < 70}\">{{t.score}}</span>\n          </td>\n          <td>{{t.events}}</td>\n          <td>{{t.cost}}</td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"dr-note\">Showing up to the last 300 trips. {{msg.payload.total}} trips are stored in total.</div>\n  </div>\n</div>\n<script>\n  (function(scope) {\n  scope.exportCsv = function() {\n    if (!scope.msg || !scope.msg.payload) return;\n    var from = scope.msg.payload.periods[scope.ui.p];\n    var rows = scope.msg.payload.log.filter(function(t) { return t.end * 1000 >= from; });\n    var head = ['time', 'vehicle', 'distance_km', 'duration_s', 'avg_speed', 'max_speed', 'score', 'rating', 'events', 'extra_cost_egp'];\n    var lines = [head.join(',')];\n    rows.forEach(function(t) {\n      lines.push([new Date(t.end * 1000).toISOString(), t.vid, t.distance, t.duration, t.avgSpeed,\n                  t.maxSpeed, t.score, t.rating, '\"' + t.events + '\"', t.cost].join(','));\n    });\n    var blob = new Blob([lines.join('\\n')], { type: 'text/csv' });\n    var a = document.createElement('a');\n    a.href = URL.createObjectURL(blob);\n    a.download = 'trips.csv';\n    document.body.appendChild(a); a.click(); a.remove();\n  };\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1040,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "792a3491161c0662",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-contrib-web-worldmap": "5.9.1"
+        }
+    }
+]

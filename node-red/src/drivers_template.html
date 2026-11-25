@@ -1,0 +1,77 @@
+<style>
+.dr-wrap{font-family:Segoe UI,Roboto,Arial,sans-serif;color:#e2e8f0}
+.dr-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.dr-tab{padding:6px 14px;border-radius:999px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;cursor:pointer;font-size:13px}
+.dr-on{background:#0e9f9a;color:#fff;border-color:#0e9f9a}
+.dr-sp{margin-left:auto}
+.dr-btn{padding:6px 14px;border-radius:8px;border:1px solid #0e9f9a;background:#0e9f9a;color:#fff;cursor:pointer;font-size:13px}
+.dr-h{font-size:18px;font-weight:700;margin:14px 0 8px}
+.dr-table{width:100%;border-collapse:collapse;font-size:13px}
+.dr-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:#94a3b8;padding:6px 8px;border-bottom:2px solid #334155}
+.dr-table td{padding:7px 8px;border-bottom:1px solid #334155}
+.dr-badge{display:inline-block;min-width:34px;text-align:center;padding:2px 8px;border-radius:8px;color:#fff;background:#9ca3af}
+.dr-good{background:#16a34a}.dr-avg{background:#d97706}.dr-risky{background:#dc2626}
+.dr-note{font-size:12px;color:#94a3b8;margin-top:6px}
+.dr-scroll{max-height:420px;overflow:auto}
+</style>
+<div class="dr-wrap" ng-init="ui = {p: 'month'}">
+  <div class="dr-bar">
+    <span class="dr-tab" ng-class="{'dr-on': ui.p === 'today'}" ng-click="ui.p = 'today'">Today</span>
+    <span class="dr-tab" ng-class="{'dr-on': ui.p === 'week'}" ng-click="ui.p = 'week'">Last 7 days</span>
+    <span class="dr-tab" ng-class="{'dr-on': ui.p === 'month'}" ng-click="ui.p = 'month'">This month</span>
+    <span class="dr-tab" ng-class="{'dr-on': ui.p === 'all'}" ng-click="ui.p = 'all'">All</span>
+    <button class="dr-btn dr-sp" ng-click="exportCsv()">Download trips (CSV)</button>
+  </div>
+
+  <div ng-if="!msg.payload">No trips yet. Finished trips appear here.</div>
+
+  <div ng-if="msg.payload">
+    <div class="dr-h">Driver ranking</div>
+    <table class="dr-table">
+      <tr><th>#</th><th>Vehicle</th><th>Avg score</th><th>Trips</th><th>Distance (km)</th><th>Events</th><th>Extra cost (EGP)</th><th>Per trip</th><th>Monthly est.</th></tr>
+      <tr ng-repeat="r in msg.payload.ranking[ui.p]">
+        <td>{{$index + 1}}</td>
+        <td><b>{{r.vid}}</b></td>
+        <td><span class="dr-badge" ng-class="{'dr-good': r.avgScore >= 85, 'dr-avg': r.avgScore >= 70 && r.avgScore < 85, 'dr-risky': r.avgScore < 70}">{{r.avgScore}}</span></td>
+        <td>{{r.trips}}</td><td>{{r.km}}</td><td>{{r.events}}</td><td>{{r.cost}}</td><td>{{r.perTrip}}</td><td>{{r.monthly}}</td>
+      </tr>
+      <tr ng-if="msg.payload.ranking[ui.p].length === 0"><td colspan="9">No trips in this period.</td></tr>
+    </table>
+    <div class="dr-note">Monthly estimate = average extra cost per trip x an assumed 60 trips per month. Costs use example assumptions, so read them as a comparison between drivers.</div>
+
+    <div class="dr-h">Trip log</div>
+    <div class="dr-scroll">
+      <table class="dr-table">
+        <tr><th>Time</th><th>Vehicle</th><th>Distance (km)</th><th>Duration (s)</th><th>Avg / max speed</th><th>Score</th><th>Events</th><th>Extra cost (EGP)</th></tr>
+        <tr ng-repeat="t in msg.payload.log" ng-if="t.end * 1000 >= msg.payload.periods[ui.p]">
+          <td>{{t.end * 1000 | date:'dd MMM HH:mm'}}</td>
+          <td><b>{{t.vid}}</b></td>
+          <td>{{t.distance}}</td><td>{{t.duration}}</td><td>{{t.avgSpeed}} / {{t.maxSpeed}}</td>
+          <td><span class="dr-badge" ng-class="{'dr-good': t.score >= 85, 'dr-avg': t.score >= 70 && t.score < 85, 'dr-risky': t.score < 70}">{{t.score}}</span></td>
+          <td>{{t.events}}</td><td>{{t.cost}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="dr-note">Showing up to the last 300 trips. {{msg.payload.total}} trips are stored in total.</div>
+  </div>
+</div>
+<script>
+(function(scope) {
+  scope.exportCsv = function() {
+    if (!scope.msg || !scope.msg.payload) return;
+    var from = scope.msg.payload.periods[scope.ui.p];
+    var rows = scope.msg.payload.log.filter(function(t) { return t.end * 1000 >= from; });
+    var head = ['time', 'vehicle', 'distance_km', 'duration_s', 'avg_speed', 'max_speed', 'score', 'rating', 'events', 'extra_cost_egp'];
+    var lines = [head.join(',')];
+    rows.forEach(function(t) {
+      lines.push([new Date(t.end * 1000).toISOString(), t.vid, t.distance, t.duration, t.avgSpeed,
+                  t.maxSpeed, t.score, t.rating, '"' + t.events + '"', t.cost].join(','));
+    });
+    var blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'trips.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+  };
+})(scope);
+</script>

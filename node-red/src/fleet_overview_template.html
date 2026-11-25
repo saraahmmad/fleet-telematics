@@ -1,0 +1,142 @@
+<style>
+.fl-wrap{font-family:Segoe UI,Roboto,Arial,sans-serif;color:#e2e8f0}
+.fl-sum{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.fl-sum>div{flex:1;min-width:130px;background:#1e293b;color:#fff;border-radius:12px;padding:12px 16px;border-left:4px solid #0e9f9a}
+.fl-sum b{display:block;font-size:28px;line-height:1.15;color:#5eead4}
+.fl-sum span{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.6px}
+.fl-hint{font-size:12px;color:#94a3b8;margin:0 0 8px}
+.fl-grid{display:flex;gap:14px;flex-wrap:wrap}
+.fl-card{flex:1;min-width:270px;max-width:440px;background:#1e293b;border:2px solid #334155;border-radius:14px;padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,.35);cursor:pointer}
+.fl-sel{border-color:#2dd4bf}
+.fl-alert{border-color:#ef4444;box-shadow:0 2px 14px rgba(239,68,68,.25)}
+.fl-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.fl-id{font-size:20px;font-weight:700;margin-right:auto}
+.fl-pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px}
+.fl-on{background:#064e3b;color:#6ee7b7}.fl-off{background:#7f1d1d;color:#fca5a5}
+.fl-drive{background:#134e4a;color:#5eead4}.fl-park{background:#334155;color:#cbd5e1}
+.fl-speed{margin-bottom:10px;font-size:13px;color:#94a3b8}
+.fl-big{font-size:42px;font-weight:700;color:#f8fafc;line-height:1}
+.fl-track{height:8px;background:#334155;border-radius:999px;overflow:hidden;margin:6px 0}
+.fl-fill{height:100%;background:#14b8b2;border-radius:999px;transition:width .5s}
+.fl-green{background:#22c55e}.fl-red{background:#ef4444}
+.fl-row{display:flex;gap:14px;margin-bottom:10px}
+.fl-kpi{flex:1}
+.fl-kpi label{display:block;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.4px}
+.fl-kpi b{font-size:18px}
+.fl-kpi small{display:block;font-size:11px;color:#94a3b8}
+.fl-txt-red{color:#f87171}.fl-txt-amber{color:#fbbf24}
+.fl-badge{display:inline-block;min-width:38px;text-align:center;padding:2px 10px;border-radius:8px;color:#fff;background:#9ca3af}
+.fl-good{background:#16a34a}.fl-avg{background:#d97706}.fl-risky{background:#dc2626}
+.fl-event{font-size:12px;color:#94a3b8;border-top:1px solid #334155;padding-top:8px}
+.fl-detail{margin-top:16px;background:#1e293b;border:1px solid #334155;border-radius:14px;padding:14px 16px}
+.fl-dtitle{font-size:18px;font-weight:700;margin-bottom:10px}
+.fl-charts{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.fl-chart{flex:1;min-width:220px}
+.fl-chart label{display:block;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.fl-chart svg{width:100%;height:auto;background:#0f172a;border-radius:8px}
+.fl-cols{display:flex;gap:20px;flex-wrap:wrap;font-size:13px}
+.fl-cols>div{flex:1;min-width:240px}
+.fl-li{padding:3px 0;border-bottom:1px solid #334155}
+.fl-map-title{font-size:18px;font-weight:700;margin:18px 0 8px}
+</style>
+<div class="fl-wrap" ng-if="msg.payload" ng-init="ui = {sel: null}">
+  <div class="fl-sum">
+    <div><b>{{msg.payload.summary.online}} / {{msg.payload.summary.total}}</b><span>Vehicles online</span></div>
+    <div><b>{{msg.payload.summary.fleetAvg === null ? '-' : msg.payload.summary.fleetAvg}}</b><span>Fleet average score</span></div>
+    <div><b>{{msg.payload.summary.atRisk}}</b><span>Vehicles at risk</span></div>
+  </div>
+
+  <p class="fl-hint">Click a vehicle to see its details below.</p>
+  <div class="fl-grid">
+    <div class="fl-card" ng-repeat="v in msg.payload.vehicles track by v.vid" ng-click="ui.sel = v.vid"
+         ng-class="{'fl-sel': (ui.sel || msg.payload.vehicles[0].vid) === v.vid, 'fl-alert': v.temp >= 105 || (v.eventAgoS !== null && v.eventAgoS < 15)}">
+      <div class="fl-head">
+        <span class="fl-id">{{v.vid}}</span>
+        <span class="fl-pill" ng-class="v.online ? 'fl-on' : 'fl-off'">{{v.online ? 'Online' : 'Offline'}}</span>
+        <span class="fl-pill" ng-class="v.ign ? 'fl-drive' : 'fl-park'">{{v.ign ? 'Driving' : 'Parked'}}</span>
+      </div>
+      <div class="fl-speed">
+        <span class="fl-big">{{v.speed}}</span> km/h
+        <div class="fl-track"><div class="fl-fill" ng-style="{width: v.speedPct + '%'}"></div></div>
+      </div>
+      <div class="fl-row">
+        <div class="fl-kpi">
+          <label>Fuel</label>
+          <div class="fl-track"><div class="fl-fill" ng-class="v.fuel < 20 ? 'fl-red' : 'fl-green'" ng-style="{width: v.fuelPct + '%'}"></div></div>
+          <b>{{v.fuel}}%</b>
+        </div>
+        <div class="fl-kpi">
+          <label>Engine temp</label>
+          <b ng-class="v.temp >= 105 ? 'fl-txt-red' : (v.temp >= 95 ? 'fl-txt-amber' : '')">{{v.temp}} &deg;C</b>
+        </div>
+      </div>
+      <div class="fl-row">
+        <div class="fl-kpi">
+          <label>Driver score (avg)</label>
+          <b><span class="fl-badge" ng-class="{'fl-good': v.avgScore >= 85, 'fl-avg': v.avgScore >= 70 && v.avgScore < 85, 'fl-risky': v.avgScore !== null && v.avgScore < 70}">{{v.avgScore === null ? '-' : v.avgScore}}</span></b>
+        </div>
+        <div class="fl-kpi"><label>Trips</label><b>{{v.trips}}</b></div>
+        <div class="fl-kpi">
+          <label>Extra cost / trip</label>
+          <b>{{v.perTrip === null ? '-' : v.perTrip + ' EGP'}}</b>
+          <small ng-if="v.monthly !== null">about {{v.monthly}} EGP / month</small>
+        </div>
+      </div>
+      <div class="fl-event">Last event: <b>{{v.lastEvent.replace('_', ' ')}}</b><span ng-if="v.eventAgoS !== null"> ({{v.eventAgoS}} s ago)</span> &middot; total events: {{v.events}}</div>
+    </div>
+  </div>
+
+  <div class="fl-detail" ng-repeat="v in msg.payload.vehicles track by v.vid" ng-show="(ui.sel || msg.payload.vehicles[0].vid) === v.vid">
+    <div class="fl-dtitle">{{v.vid}} details</div>
+    <div class="fl-charts">
+      <div class="fl-chart">
+        <label>Speed (km/h), last 120 readings</label>
+        <svg viewBox="0 0 320 120">
+          <g stroke="#334155" stroke-width="1"><line x1="40" x2="310" y1="10" y2="10"></line><line x1="40" x2="310" y1="55" y2="55"></line><line x1="40" x2="310" y1="100" y2="100"></line></g>
+          <g font-size="9" fill="#94a3b8" text-anchor="end"><text x="36" y="13">120</text><text x="36" y="58">60</text><text x="36" y="103">0</text></g>
+          <text x="40" y="115" font-size="9" fill="#94a3b8">older</text><text x="310" y="115" font-size="9" fill="#94a3b8" text-anchor="end">now</text>
+          <polyline fill="none" stroke="#2dd4bf" stroke-width="2" ng-attr-points="{{v.speedPts}}"></polyline>
+        </svg>
+      </div>
+      <div class="fl-chart">
+        <label>Engine temp (&deg;C), red line = 105</label>
+        <svg viewBox="0 0 320 120">
+          <g stroke="#334155" stroke-width="1"><line x1="40" x2="310" y1="10" y2="10"></line><line x1="40" x2="310" y1="55" y2="55"></line><line x1="40" x2="310" y1="100" y2="100"></line></g>
+          <g font-size="9" fill="#94a3b8" text-anchor="end"><text x="36" y="13">130</text><text x="36" y="58">85</text><text x="36" y="103">40</text></g>
+          <text x="40" y="115" font-size="9" fill="#94a3b8">older</text><text x="310" y="115" font-size="9" fill="#94a3b8" text-anchor="end">now</text>
+          <line x1="40" x2="310" stroke="#ef4444" stroke-width="1" stroke-dasharray="4" ng-attr-y1="{{v.tempLimitY}}" ng-attr-y2="{{v.tempLimitY}}"></line>
+          <polyline fill="none" stroke="#f59e0b" stroke-width="2" ng-attr-points="{{v.tempPts}}"></polyline>
+        </svg>
+      </div>
+      <div class="fl-chart">
+        <label>Fuel (%), last 120 readings</label>
+        <svg viewBox="0 0 320 120">
+          <g stroke="#334155" stroke-width="1"><line x1="40" x2="310" y1="10" y2="10"></line><line x1="40" x2="310" y1="55" y2="55"></line><line x1="40" x2="310" y1="100" y2="100"></line></g>
+          <g font-size="9" fill="#94a3b8" text-anchor="end"><text x="36" y="13">100</text><text x="36" y="58">50</text><text x="36" y="103">0</text></g>
+          <text x="40" y="115" font-size="9" fill="#94a3b8">older</text><text x="310" y="115" font-size="9" fill="#94a3b8" text-anchor="end">now</text>
+          <polyline fill="none" stroke="#22c55e" stroke-width="2" ng-attr-points="{{v.fuelPts}}"></polyline>
+        </svg>
+      </div>
+    </div>
+    <div class="fl-cols">
+      <div>
+        <b>Recent events</b>
+        <div class="fl-li" ng-repeat="e in v.recent track by $index">{{e.type}} ({{e.value}}) &middot; {{e.agoS}} s ago</div>
+        <div class="fl-li" ng-if="v.recent.length === 0">No events yet</div>
+      </div>
+      <div>
+        <b>Last trip</b>
+        <div ng-if="v.lastTrip">
+          <div class="fl-li">Distance: {{v.lastTrip.distance}} km &middot; Duration: {{v.lastTrip.duration}} s</div>
+          <div class="fl-li">Average speed: {{v.lastTrip.avgSpeed}} km/h &middot; Max: {{v.lastTrip.maxSpeed}} km/h</div>
+          <div class="fl-li">Score: {{v.lastTrip.score}} ({{v.lastTrip.rating}})</div>
+          <div class="fl-li">Events: {{v.lastTrip.events}}</div>
+        </div>
+        <div class="fl-li" ng-if="!v.lastTrip">No completed trip yet</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fl-map-title">Live map</div>
+  <iframe src="/worldmap" style="width:100%;height:380px;border:0;border-radius:12px"></iframe>
+</div>
