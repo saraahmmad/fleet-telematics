@@ -46,5 +46,5 @@ Wokwi ESP32 (V01) + Python simulator (V02, V03)
 esp32-wokwi/   firmware and circuit for vehicle V01
 simulator/     Python vehicle simulator
 node-red/      flows (add flows.json) and readable function/template source
-docs/          report, presentation, screenshots
+docs/          presentation, screenshots
 ```
