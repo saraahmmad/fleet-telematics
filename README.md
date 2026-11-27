@@ -5,7 +5,7 @@ An IoT prototype that monitors a fleet, detects risky driving events, scores eve
 **Everything is simulated.** One vehicle runs on an ESP32 in the Wokwi simulator, and two more are simulated by a Python script. The analysis is rule-based (no machine learning).
 
 - Wokwi project: https://wokwi.com/projects/481153186960273409
-- Demo video: https://drive.google.com/file/d/1qbZSGBE6okhFAuzWlpCYA2_ZUeHoXxWX/view?usp=drivesdk
+- Demo video: https://drive.google.com/file/d/1tXetSaZscrc9Pr4uEMjSDh6Df--uOOSP/view?usp=drivesdk
 - Presentation: see `docs/`
 
 ## How it works
